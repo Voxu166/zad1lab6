@@ -1,6 +1,7 @@
 
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
+import {Platform, StyleSheet, Text, View,TouchableOpacity} from 'react-native';
+import { AsyncStorage } from "react-native";
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
@@ -14,14 +15,34 @@ export default class App extends Component<Props> {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome to React Native!</Text>
-        <Text style={styles.instructions}>To get started, edit App.js</Text>
-        <Text style={styles.instructions}>{instructions}</Text>
+       <TouchableOpacity onPress={this._retrieveData}>
+         <text>zapisz</text>
+       </TouchableOpacity>
+          <TouchableOpacity onPress={this._storeData}>
+              <text>zaladuj</text>
+          </TouchableOpacity>
       </View>
     );
   }
 }
 
+_storeData = async () => {
+    try {
+        let regulamin = 'regulamin';
+        AsyncStorage.setItem('regulamin',regulamin);
+    } catch (error) {
+
+    }
+}
+_retrieveData = async () => {
+    try {
+      let regulamin = await  AsyncStorage.getItem('regulamin');
+      alert(regulamin);
+        }
+    } catch (error) {
+
+    }
+}
 const styles = StyleSheet.create({
   container: {
     flex: 1,
